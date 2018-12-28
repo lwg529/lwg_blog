@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="js,数据类型转换,数据转换,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言无论笔试还是面试，总会问到数据类型和隐式转换。今天彻底整理一下这块的知识，希望对大家有帮助。 看到下面的题，是不是已经蒙了，读完这篇文章，就能顺利通关了1234567891011121314151617181920212223console.log([] == 0) //true console.log(![] == 0)  //true console.log([] == ![]) //tr">
+<meta name="keywords" content="js,数据类型转换,数据转换">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js数据类型判断和转换">
+<meta property="og:url" content="https://github.com/lwg529/lwg529.github.io/2018/12/28/2018-12-28-js数据类型判断及转换/index.html">
+<meta property="og:site_name" content="lwg-blog">
+<meta property="og:description" content="前言无论笔试还是面试，总会问到数据类型和隐式转换。今天彻底整理一下这块的知识，希望对大家有帮助。 看到下面的题，是不是已经蒙了，读完这篇文章，就能顺利通关了1234567891011121314151617181920212223console.log([] == 0) //true console.log(![] == 0)  //true console.log([] == ![]) //tr">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-12-28T08:10:40.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="js数据类型判断和转换">
+<meta name="twitter:description" content="前言无论笔试还是面试，总会问到数据类型和隐式转换。今天彻底整理一下这块的知识，希望对大家有帮助。 看到下面的题，是不是已经蒙了，读完这篇文章，就能顺利通关了1234567891011121314151617181920212223console.log([] == 0) //true console.log(![] == 0)  //true console.log([] == ![]) //tr">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://github.com/lwg529/lwg529.github.io/2018/12/28/2018-12-28-js数据类型判断及转换/">
+
+
+
+
+
+  <title>js数据类型判断和转换 | lwg-blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">lwg-blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://github.com/lwg529/lwg529.github.io/2018/12/28/2018-12-28-js数据类型判断及转换/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="lwg">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="lwg-blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">js数据类型判断和转换</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-12-28T00:00:00+08:00">
+                2018-12-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/js/" itemprop="url" rel="index">
+                    <span itemprop="name">js</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>无论笔试还是面试，总会问到数据类型和隐式转换。今天彻底整理一下这块的知识，希望对大家有帮助。</p>
+<p>看到下面的题，是不是已经蒙了，读完这篇文章，就能顺利通关了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">console.log([] == 0) //true </span><br><span class="line"></span><br><span class="line">console.log(![] == 0)  //true </span><br><span class="line"></span><br><span class="line">console.log([] == ![]) //true</span><br><span class="line"></span><br><span class="line">console.log([] == []) //false</span><br><span class="line"></span><br><span class="line">console.log(&#123;&#125; == &#123;&#125;) //false</span><br><span class="line"></span><br><span class="line">console.log(&#123;&#125; == !&#123;&#125;) //false</span><br><span class="line"></span><br><span class="line">console.log([] == false) //true</span><br><span class="line"></span><br><span class="line">console.log(&#123;&#125; == false) //false</span><br><span class="line"></span><br><span class="line">if([]) &#123;console.log(3)&#125; //3 </span><br><span class="line"></span><br><span class="line">if([1] == [1])&#123;console.log(4)&#125; //没有输出</span><br><span class="line"></span><br><span class="line">console.log(&apos;2&apos; &gt; 10) //false</span><br><span class="line"></span><br><span class="line">console.log(&apos;2&apos; &gt; &apos;10&apos;) //true</span><br></pre></td></tr></table></figure></p>
+<h2 id="数据类型判断"><a href="#数据类型判断" class="headerlink" title="数据类型判断"></a>数据类型判断</h2><h3 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h3><p>js数据类型一共有7种，undefined、 null、 boolean 、string、 number、 object、 Symbol</p>
+<h3 id="类型判断"><a href="#类型判断" class="headerlink" title="类型判断"></a>类型判断</h3><h4 id="typeof"><a href="#typeof" class="headerlink" title="typeof"></a>typeof</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">typeof undefined //undefined</span><br><span class="line">typeof true //boolean</span><br><span class="line">typeof 42 //number</span><br><span class="line">typeof &apos;42&apos; //string</span><br><span class="line">typeof &#123; life: 42 &#125; //object</span><br><span class="line">let s = Symbol();</span><br><span class="line">typeof s //symbol</span><br><span class="line"></span><br><span class="line">//特殊情况</span><br><span class="line">typeof [1,2,3,4]// object</span><br><span class="line">typeof null //object</span><br><span class="line">typeof new Date()  //object</span><br><span class="line">typeof function () &#123;&#125;  //function</span><br></pre></td></tr></table></figure>
+<p><strong>由此可以看出，typeof不能区分数组， null和对象</strong></p>
+<h4 id="Object-prototype-toString-call"><a href="#Object-prototype-toString-call" class="headerlink" title="Object.prototype.toString.call"></a>Object.prototype.toString.call</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">let getType=Object.prototype.toString;</span><br><span class="line"></span><br><span class="line">getType.call(undefined) //[object Undefined]</span><br><span class="line"></span><br><span class="line">console.log(getType.call(true)) //[object Boolean]</span><br><span class="line"></span><br><span class="line">console.log(getType.call(42)) //[object Number]</span><br><span class="line"></span><br><span class="line">console.log(getType.call(Symbol()))//[object Symbol]</span><br><span class="line"></span><br><span class="line">console.log(getType.call([1,2,3,4])) //[object Array]</span><br><span class="line"></span><br><span class="line">console.log(getType.call(null))//[object Null]</span><br><span class="line"></span><br><span class="line">console.log(getType.call(new Date())) //[object Date]</span><br><span class="line"></span><br><span class="line">console.log(getType.call(function () &#123;&#125; )) //[object Function]</span><br></pre></td></tr></table></figure>
+<h4 id="instanceof"><a href="#instanceof" class="headerlink" title="instanceof"></a>instanceof</h4><p>instanceof运算符返回一个布尔值，表示对象是否为某个构造函数的实例。</p>
+<p>instanceof运算符的左边是<strong>实例对象</strong>，右边是构造函数。它会检查右边构建函数的原型对象（prototype），是否在左边对象的原型链上。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">new Date instanceof Date //true</span><br><span class="line">[1,2,3] instanceof Array //true</span><br></pre></td></tr></table></figure>
+<p><strong>instanceof运算符只能用于对象，不适用原始类型的值。</strong></p>
+<h4 id="constructor-属性"><a href="#constructor-属性" class="headerlink" title="constructor 属性"></a>constructor 属性</h4><p>prototype对象有一个constructor属性，默认指向prototype对象所在的构造函数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">function P() &#123;&#125;</span><br><span class="line">P.prototype.constructor === P // true</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[1,2].constructor === Array //true</span><br><span class="line">&apos;123&apos;.constructor === String //true</span><br></pre></td></tr></table></figure>
+<h2 id="面试常问"><a href="#面试常问" class="headerlink" title="面试常问"></a>面试常问</h2><h3 id="怎么判断是不是数组"><a href="#怎么判断是不是数组" class="headerlink" title="怎么判断是不是数组"></a>怎么判断是不是数组</h3><p>instanceof、constructor、Object.prototype.toString.call、Array.isArray</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[1,2] instanceof Array //true</span><br><span class="line">[1,2].constructor === Array //true</span><br><span class="line">Object.prototype.toString.call([1,2]) === &apos;[object Array]&apos; //true</span><br><span class="line">Array.isArray([1,2]) //true</span><br></pre></td></tr></table></figure>
+<h3 id="如何判断一个对象是不是空对象"><a href="#如何判断一个对象是不是空对象" class="headerlink" title="如何判断一个对象是不是空对象"></a>如何判断一个对象是不是空对象</h3><p>转换成json字符串判断<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">JSON.stringify(&#123;&#125;) == &quot;&#123;&#125;&quot;</span><br></pre></td></tr></table></figure></p>
+<p>for in 循环判断</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">let isEmptyObject = function(obj) &#123;</span><br><span class="line">    for (let key in obj) &#123;</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line">    return true;</span><br><span class="line">&#125;</span><br><span class="line">console.log(isEmptyObject(obj));//true</span><br></pre></td></tr></table></figure>
+<p>使用ES6的Object.keys()</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Object.keys(&#123;&#125;).length === 0</span><br></pre></td></tr></table></figure>
+<h3 id="类似的数组转化成数组"><a href="#类似的数组转化成数组" class="headerlink" title="类似的数组转化成数组"></a>类似的数组转化成数组</h3><p>类数组和数组都可以读写，获取长度，遍历，但是类数组不能调用数组的方法，比如push等</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Array.prototype.slice.call(arguments)</span><br></pre></td></tr></table></figure>
+<p>或者<code>Array.from(arguments)</code></p>
+<h3 id="字符串翻转"><a href="#字符串翻转" class="headerlink" title="字符串翻转"></a>字符串翻转</h3><p>‘abc’.split(‘’).reverse().join(‘’)</p>
+<h3 id="字符串和数组转换"><a href="#字符串和数组转换" class="headerlink" title="字符串和数组转换"></a>字符串和数组转换</h3><p><code>[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;].join(&#39;&#39;)  //&#39;abc&#39;</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&apos;abc&apos;.split(&apos;&apos;) //[&apos;a&apos;, &apos;b&apos;, &apos;c&apos;]</span><br></pre></td></tr></table></figure></p>
+<h2 id="类型转换"><a href="#类型转换" class="headerlink" title="类型转换"></a>类型转换</h2><h3 id="显示类型转换"><a href="#显示类型转换" class="headerlink" title="显示类型转换"></a>显示类型转换</h3><h4 id="转成数字，Number-、parseInt-、parseFloat"><a href="#转成数字，Number-、parseInt-、parseFloat" class="headerlink" title="转成数字，Number()、parseInt()、parseFloat()"></a>转成数字，Number()、parseInt()、parseFloat()</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">// 数值：转换后还是原来的值</span><br><span class="line">Number(324) // 324</span><br><span class="line"></span><br><span class="line">// 字符串：如果可以被解析为数值，则转换为相应的数值</span><br><span class="line">Number(&apos;324&apos;) // 324</span><br><span class="line"></span><br><span class="line">// 字符串：如果不可以被解析为数值，返回 NaN</span><br><span class="line">Number(&apos;324abc&apos;) // NaN</span><br><span class="line"></span><br><span class="line">// 空字符串转为0</span><br><span class="line">Number(&apos;&apos;) // 0</span><br><span class="line"></span><br><span class="line">// 布尔值：true 转成 1，false 转成 0</span><br><span class="line">Number(true) // 1</span><br><span class="line">Number(false) // 0</span><br><span class="line"></span><br><span class="line">// undefined：转成 NaN</span><br><span class="line">Number(undefined) // NaN</span><br><span class="line"></span><br><span class="line">// null：转成0</span><br><span class="line">Number(null) // 0</span><br><span class="line"></span><br><span class="line">//对象转化</span><br><span class="line">Number(&#123;a: 1&#125;) // NaN</span><br><span class="line">Number(&#123;&#125;) //NaN </span><br><span class="line"></span><br><span class="line">//数组</span><br><span class="line">Number([1, 2, 3]) // NaN</span><br><span class="line">Number([5]) // 5</span><br><span class="line">Number([]) //0</span><br></pre></td></tr></table></figure>
+<p><strong>Number方法参数是对象时转换规则</strong></p>
+<p>第一步，调用对象自身的valueOf方法。如果返回原始类型的值，则直接对该值使用Number函数，不再进行后续步骤。</p>
+<p>第二步，如果valueOf方法返回的还是对象，则改为调用对象自身的toString方法。如果toString方法返回原始类型的值，则对该值使用Number函数，不再进行后续步骤。</p>
+<p>第三步，如果toString方法返回的是对象，就报错。</p>
+<p>转换规则示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var obj = &#123;x: 1&#125;;</span><br><span class="line">Number(obj) // NaN</span><br><span class="line"></span><br><span class="line">// 等同于</span><br><span class="line">if (typeof obj.valueOf() === &apos;object&apos;) &#123;</span><br><span class="line">  Number(obj.toString());</span><br><span class="line">&#125; else &#123;</span><br><span class="line">  Number(obj.valueOf());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>先使用valueOf返回了对象本身，再代用toString()返回了”[object Object]”</p>
+<p><strong>注意：</strong><br>任何涉及NaN的操作都返回NaN，NaN和任何值不相等</p>
+<h4 id="Boolean"><a href="#Boolean" class="headerlink" title="Boolean"></a>Boolean</h4><p>除了以下值的转换结果为false，其他的值全部为true。</p>
+<p><code>false, &#39;&#39;, 0, NaN, null, undefined</code></p>
+<h4 id="String函数可以将任意类型的值转化成字符串"><a href="#String函数可以将任意类型的值转化成字符串" class="headerlink" title="String函数可以将任意类型的值转化成字符串"></a>String函数可以将任意类型的值转化成字符串</h4><p>（1）原始类型值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">//数值：转为相应的字符串。</span><br><span class="line">String(123) // &quot;123&quot;</span><br><span class="line"></span><br><span class="line">//字符串：转换后还是原来的值。</span><br><span class="line">String(&apos;abc&apos;) // &quot;abc&quot;</span><br><span class="line"></span><br><span class="line">//布尔值：true转为字符串&quot;true&quot;，false转为字符串&quot;false&quot;。</span><br><span class="line">String(true) // &quot;true&quot;</span><br><span class="line"></span><br><span class="line">//undefined：转为字符串&quot;undefined&quot;。</span><br><span class="line">String(undefined) // &quot;undefined&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//null：转为字符串&quot;null&quot;。</span><br><span class="line">String(null) // &quot;null&quot;</span><br></pre></td></tr></table></figure>
+<p>（2）对象</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//String方法的参数如果是对象，返回一个类型字符串</span><br><span class="line">String(&#123;a: 1&#125;) // &quot;[object Object]&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//如果是数组，返回该数组的字符串形式。</span><br><span class="line">String([1, 2, 3]) // &quot;1,2,3&quot;</span><br></pre></td></tr></table></figure>
+<p><strong>String方法背后的转换规则，与Number方法基本相同，只是互换了valueOf方法和toString方法的执行顺序。</strong></p>
+<h3 id="隐式类型转换"><a href="#隐式类型转换" class="headerlink" title="隐式类型转换"></a>隐式类型转换</h3><h4 id="自动转化为布尔值"><a href="#自动转化为布尔值" class="headerlink" title="自动转化为布尔值"></a>自动转化为布尔值</h4><p>if条件，while,</p>
+<h4 id="自动转换为字符串"><a href="#自动转换为字符串" class="headerlink" title="自动转换为字符串"></a>自动转换为字符串</h4><p>主要发生在字符串加法，一个值为字符串，另一个非字符串，则后者直接转为字符串</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&apos;5&apos; + 1 // &apos;51&apos;</span><br><span class="line">&apos;5&apos; + true // &quot;5true&quot;</span><br><span class="line">&apos;5&apos; + &#123;&#125; // &quot;5[object Object]&quot;</span><br></pre></td></tr></table></figure>
+<h4 id="自动转化为数值"><a href="#自动转化为数值" class="headerlink" title="自动转化为数值"></a>自动转化为数值</h4><p>除了加法运算符（+）有可能把运算子转为字符串，其他运算符都会把运算子自动转成数值。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">++/--(自增自减运算符) </span><br><span class="line"></span><br><span class="line">+ - * / %(算术运算符) </span><br><span class="line"></span><br><span class="line">+ &gt; &lt; &gt;= &lt;= == != === !=== (关系运算符)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&apos;5&apos; - &apos;2&apos; // 3</span><br><span class="line">&apos;5&apos; * &apos;2&apos; // 10</span><br><span class="line">true - 1  // 0</span><br><span class="line">false / &apos;5&apos; // 0</span><br><span class="line"></span><br><span class="line">//&apos;abc&apos;转为数值为NaN,NaN任何运算都是NaN</span><br><span class="line">&apos;abc&apos; - 1   // NaN</span><br><span class="line"></span><br><span class="line">//null进行Number运算转成0</span><br><span class="line">null + 1 // 1</span><br><span class="line"></span><br><span class="line">//undefined转为数值时为NaN</span><br><span class="line">undefined + 1 // NaN</span><br></pre></td></tr></table></figure>
+<h4 id="运算符"><a href="#运算符" class="headerlink" title="== 运算符"></a>== 运算符</h4><p>（1）原始类型的数据会转换成数值类型再进行比较。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">1 == true // true</span><br><span class="line">// 等同于 1 === Number(true)</span><br><span class="line"></span><br><span class="line">0 == false // true</span><br><span class="line">// 等同于 0 === Number(false)</span><br><span class="line"></span><br><span class="line">2 == true // false</span><br><span class="line">// 等同于 2 === Number(true)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&apos;true&apos; == true // false</span><br><span class="line">// 等同于 Number(&apos;true&apos;) === Number(true)</span><br><span class="line">// 等同于 NaN === 1</span><br><span class="line"></span><br><span class="line">&apos;&apos; == 0 // true</span><br><span class="line">// 等同于 Number(&apos;&apos;) === 0</span><br><span class="line">// 等同于 0 === 0</span><br><span class="line"></span><br><span class="line">&apos;&apos; == false  // true</span><br><span class="line">// 等同于 Number(&apos;&apos;) === Number(false)</span><br><span class="line">// 等同于 0 === 0</span><br><span class="line"></span><br><span class="line">&apos;1&apos; == true  // true</span><br><span class="line">// 等同于 Number(&apos;1&apos;) === Number(true)</span><br><span class="line">// 等同于 1 === 1</span><br><span class="line"></span><br><span class="line">&apos;\n  123  \t&apos; == 123 // true</span><br><span class="line">// 因为字符串转为数字时，省略前置和后置的空格</span><br></pre></td></tr></table></figure>
+<p>（2）对象与原始类型值比较</p>
+<p>对象（这里指广义的对象，包括数组和函数）与原始类型的值比较时，对象转化成原始类型的值，再进行比较。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[1] == 1 // true</span><br><span class="line">// 等同于 Number([1]) == 1</span><br><span class="line"></span><br><span class="line">[1] == &apos;1&apos; // true</span><br><span class="line">// 等同于 Number([1]) == Number(&apos;1&apos;)</span><br><span class="line"></span><br><span class="line">[1] == true // true</span><br><span class="line">// 等同于 Number([1]) == Number(true)</span><br></pre></td></tr></table></figure>
+<h2 id="实战练习"><a href="#实战练习" class="headerlink" title="实战练习"></a>实战练习</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">//true,空数组valueOf还是空数组，toString()转成得到空字符串，空字符串调用Number转成0</span><br><span class="line">console.log([] == 0) //true </span><br><span class="line"></span><br><span class="line">//true，非的运算级别高，空数组转为布尔值为true,所以![]得到的false，Number转换为0， 最后结果还是true</span><br><span class="line">console.log(![] == 0)  //true </span><br><span class="line"></span><br><span class="line">//true,前面是调用valueOf()后调用toString()转成false，后边是非转成false</span><br><span class="line">console.log([] == ![]) </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//false，2个数组放在堆里面，栈中存储的是地址</span><br><span class="line">console.log([] == []) </span><br><span class="line"></span><br><span class="line">//引用类型存储在堆中，栈中的是地址，所以是false</span><br><span class="line">console.log(&#123;&#125; == &#123;&#125;) </span><br><span class="line"></span><br><span class="line">//&#123;&#125;.valueOf().toString()得到的是[object, Object], !&#123;&#125;得到的是false，Number转换后不相等</span><br><span class="line">console.log(&#123;&#125; == !&#123;&#125;)</span><br><span class="line"></span><br><span class="line">//数组的valueOf().toString()后为空，所以是真</span><br><span class="line">console.log([] == false) //true</span><br><span class="line"></span><br><span class="line">//因为对象调用valueOf后为&#123;&#125;, toString后转为[object, Object]，Number后是NaN,</span><br><span class="line">//任何涉及NaN的操作都返回NaN，NaN和任何值不相等</span><br><span class="line">console.log(&#123;&#125; == false) //false</span><br><span class="line"></span><br><span class="line">//空数组的boolean值为true</span><br><span class="line">if([]) &#123;console.log(3)&#125; //3 </span><br><span class="line"></span><br><span class="line">//2个数组的栈地址不同</span><br><span class="line">if([1] == [1])&#123;console.log(4)&#125; //没有输出</span><br><span class="line"></span><br><span class="line">//false,转成2&gt;10</span><br><span class="line">console.log(&apos;2&apos; &gt; 10) </span><br><span class="line"></span><br><span class="line">//都是字符串，按照字符串的unicode转换，&apos;2&apos;.charCodeAt() &gt; &apos;10&apos;.charCodeAt = 50 &gt; 49</span><br><span class="line">console.log(&apos;2&apos; &gt; &apos;10&apos;) </span><br><span class="line"></span><br><span class="line">//都是字符串，按照字符串的unicode转换</span><br><span class="line">console.log(&apos;abc&apos; &gt; &apos;b&apos;) //false</span><br></pre></td></tr></table></figure>
+<p>参考：<a href="http://javascript.ruanyifeng.com/grammar/conversion.html" target="_blank" rel="noopener">http://javascript.ruanyifeng.com/grammar/conversion.html</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/js/" rel="tag"># js</a>
+          
+            <a href="/tags/数据类型转换/" rel="tag"># 数据类型转换</a>
+          
+            <a href="/tags/数据转换/" rel="tag"># 数据转换</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">lwg</p>
+              <p class="site-description motion-element" itemprop="description">记录成长，遇见更好的自己</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据类型判断"><span class="nav-number">2.</span> <span class="nav-text">数据类型判断</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据类型"><span class="nav-number">2.1.</span> <span class="nav-text">数据类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类型判断"><span class="nav-number">2.2.</span> <span class="nav-text">类型判断</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#typeof"><span class="nav-number">2.2.1.</span> <span class="nav-text">typeof</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Object-prototype-toString-call"><span class="nav-number">2.2.2.</span> <span class="nav-text">Object.prototype.toString.call</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#instanceof"><span class="nav-number">2.2.3.</span> <span class="nav-text">instanceof</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#constructor-属性"><span class="nav-number">2.2.4.</span> <span class="nav-text">constructor 属性</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#面试常问"><span class="nav-number">3.</span> <span class="nav-text">面试常问</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#怎么判断是不是数组"><span class="nav-number">3.1.</span> <span class="nav-text">怎么判断是不是数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何判断一个对象是不是空对象"><span class="nav-number">3.2.</span> <span class="nav-text">如何判断一个对象是不是空对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类似的数组转化成数组"><span class="nav-number">3.3.</span> <span class="nav-text">类似的数组转化成数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串翻转"><span class="nav-number">3.4.</span> <span class="nav-text">字符串翻转</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串和数组转换"><span class="nav-number">3.5.</span> <span class="nav-text">字符串和数组转换</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类型转换"><span class="nav-number">4.</span> <span class="nav-text">类型转换</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#显示类型转换"><span class="nav-number">4.1.</span> <span class="nav-text">显示类型转换</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#转成数字，Number-、parseInt-、parseFloat"><span class="nav-number">4.1.1.</span> <span class="nav-text">转成数字，Number()、parseInt()、parseFloat()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Boolean"><span class="nav-number">4.1.2.</span> <span class="nav-text">Boolean</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#String函数可以将任意类型的值转化成字符串"><span class="nav-number">4.1.3.</span> <span class="nav-text">String函数可以将任意类型的值转化成字符串</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#隐式类型转换"><span class="nav-number">4.2.</span> <span class="nav-text">隐式类型转换</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#自动转化为布尔值"><span class="nav-number">4.2.1.</span> <span class="nav-text">自动转化为布尔值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自动转换为字符串"><span class="nav-number">4.2.2.</span> <span class="nav-text">自动转换为字符串</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自动转化为数值"><span class="nav-number">4.2.3.</span> <span class="nav-text">自动转化为数值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#运算符"><span class="nav-number">4.2.4.</span> <span class="nav-text">== 运算符</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实战练习"><span class="nav-number">5.</span> <span class="nav-text">实战练习</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lwg</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
