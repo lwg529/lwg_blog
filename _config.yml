@@ -2,18 +2,20 @@
 ## Docs: https://hexo.io/docs/configuration.html
 ## Source: https://github.com/hexojs/hexo/
 
+
+
 # Site
-title: lwg-blog
-subtitle: 
-description: 记录成长，遇见更好的自己
-keywords: 前端，博客
-author: lwg
-language:
+title: 刘小妞的博客
+subtitle:
+description: 刘小妞的个人博客
+keywords:
+author: 刘小妞
+language: zh-Hans
 timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: https://github.com/lwg529/lwg529.github.io
+url: http://yoursite.com
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -78,8 +80,6 @@ theme: next
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
-    type: git
-    repo: https://github.com/lwg529/lwg529.github.io.git
-    branch: master
-
-
+  type: git
+  repo: git@github.com:lwg529/lwg529.github.io.git
+  branch: master
